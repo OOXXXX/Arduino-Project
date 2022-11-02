@@ -5,7 +5,6 @@ const int buzzerPin = 6;
 
 int duration;
 float distance;
-long frequency;
 
 void setup() {
 pinMode(trigPin, OUTPUT); 
@@ -24,7 +23,7 @@ void LedFlash16() {
 }
 
 void Buzz16() {
-    tone(buzzerPin, frequency);
+    tone(buzzerPin, 300);
     delay(400); 
     noTone(buzzerPin);
     delay(400); 
@@ -38,7 +37,7 @@ void LedFlash11() {
 }
 
 void Buzz11() {
-    tone(buzzerPin, frequency);
+    tone(buzzerPin, 700);
     delay(200); 
     noTone(buzzerPin);
     delay(200); 
@@ -52,7 +51,7 @@ void LedFlash6() {
 }
 
 void Buzz6() {
-    tone(buzzerPin, frequency);
+    tone(buzzerPin, 1100);
     delay(80); 
     noTone(buzzerPin);
     delay(80); 
@@ -64,7 +63,6 @@ delayMicroseconds(2);
 digitalWrite(trigPin, HIGH);
 delayMicroseconds(10);
 digitalWrite(trigPin, LOW);
-frequency = 1000;
 duration = pulseIn(echoPin, HIGH);
 distance = duration * 0.034 / 2;
 
@@ -73,7 +71,7 @@ distance = duration * 0.034 / 2;
         LedFlash16();
         Buzz16();
     }
-    else if (distance <= 11 && distance >= 6) {
+    else if (distance < 11 && distance >= 6) {
         Serial.println ("Someone Is Infront Of the Sensor");
         LedFlash11();
         Buzz11(); 
