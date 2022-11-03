@@ -78,22 +78,18 @@ lcd.setCursor(0, 1);
 lcd.print(distance);
 
     if (distance <= 16 && distance >= 11) {
-        Serial.println ("Someone Is Infront Of the Sensor");
         LedFlash16();
         Buzz16();
     }
     else if (distance < 11 && distance >= 6) {
-        Serial.println ("Someone Is Infront Of the Sensor");
         LedFlash11();
         Buzz11(); 
     }
     else if (distance < 6) {
-        Serial.println ("Someone Is Infront Of the Sensor");
         LedFlash6();
         Buzz6();
     }
     else {
-        Serial.println ("Nobody Is Infront Of the Sensor");
         digitalWrite(ledPin, LOW);
     }
 Serial.println(distance);
