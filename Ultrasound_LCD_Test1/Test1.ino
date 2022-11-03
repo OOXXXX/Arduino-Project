@@ -72,11 +72,10 @@ duration = pulseIn(echoPin, HIGH);
 distance = duration * 0.034 / 2;
 lcd.setCursor(0, 0);
 lcd.print("Distance:");
-
+lcd.setCursor(7, 1);
+lcd.print("cm");  
 lcd.setCursor(0, 1);
 lcd.print(distance);
-lcd.print("cm");
-
 
     if (distance <= 16 && distance >= 11) {
         Serial.println ("Someone Is Infront Of the Sensor");
