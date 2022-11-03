@@ -81,10 +81,8 @@ void setup() {
   lcd.setCursor(0, 0);
 
   // Print a message to the lcd.
-  lcd.print("ZPX ");
-  lcd.write(byte(0)); // when calling lcd.write() '0' must be cast as a byte
-  lcd.print(" WXY ");
-  lcd.write((byte)1);
+  lcd.print("Hello World!");
+  lcd.write(byte(0)); // print the heart character
 
 }
 
