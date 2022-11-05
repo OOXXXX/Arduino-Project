@@ -1,0 +1,3 @@
+/Users/patrick/Desktop/Arduino/Arduino Project/Ultrasound_LCD/Arduino_CTest1/cmake-build-debug/CMakeFiles/Arduino_CTest1.dir
+/Users/patrick/Desktop/Arduino/Arduino Project/Ultrasound_LCD/Arduino_CTest1/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/patrick/Desktop/Arduino/Arduino Project/Ultrasound_LCD/Arduino_CTest1/cmake-build-debug/CMakeFiles/rebuild_cache.dir
