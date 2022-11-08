@@ -34,7 +34,6 @@ int main() {
     }
     else {
         LedNotFlash();
-        //printf("There's nothing behind the sensor!\nLED not flash\nBuzzer makes no sound\nThe LCD screen will display\nDistance:\n%d",Distance);
     }
 
     return 0;
