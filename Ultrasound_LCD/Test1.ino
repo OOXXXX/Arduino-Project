@@ -78,18 +78,22 @@ lcd.setCursor(0, 1);
 lcd.print(distance);
 
     if (distance <= 16 && distance >= 11) {
+        Serial.println("There's something behind the sensor!");
         LedFlash16();
         Buzz16();
     }
     else if (distance < 11 && distance >= 6) {
+        Serial.println("There's something behind the sensor!");
         LedFlash11();
         Buzz11(); 
     }
     else if (distance < 6) {
+        Serial.println("There's something behind the sensor!");
         LedFlash6();
         Buzz6();
     }
     else {
+        Serial.println("There's nothing behind the sensor!");
         digitalWrite(ledPin, LOW);
     }
 Serial.println(distance);
