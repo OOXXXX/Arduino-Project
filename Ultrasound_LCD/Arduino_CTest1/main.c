@@ -32,7 +32,7 @@ int main() {
     else if (Distance < 6) {
         LedFlash6();
     }
-    else {
+    else while (Distance > 16) {
         LedNotFlash();
     }
 
