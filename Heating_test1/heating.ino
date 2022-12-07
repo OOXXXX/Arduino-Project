@@ -22,7 +22,7 @@ void loop()
     analogWrite(heaterPin, 150);
     Serial.print("Heater ON");
   } 
-  else if (tempC > target + 0.25) 
+  else if (tempC > target+0.25) 
   {
     analogWrite(heaterPin, 0);
     Serial.print("Heater OFF");
