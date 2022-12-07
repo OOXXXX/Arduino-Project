@@ -1,11 +1,11 @@
-float F=96485.309;
 int T=290;
+int PH_Max = 7.5;
+int PH_Min = 6.5;
+float F=96485.309;
 float R=8.314510;
 float C=2.30258509299;
 const int basePin = 10; 
 const int acidPin = 11;
-int PH_Max = 7.5;
-int PH_Min = 6.5;
 const int motorPin = 6; 
 const int echoPin = 7;
 float rps;
@@ -13,10 +13,12 @@ float rpm;
 float time1;
 float time2;
 // heating part
-#define analogPin A5  
-#define beta 4510  
-#define resistance 10  
-#define HeaterPin 9
+const int heaterPin = 9;
+#define ThermistorPin A5
+#define A 0.0028
+#define B -4.6768e-5
+#define C 1.2034e-6
+#define R1 10000 //the value of the pull-down resistor
 float target = 30 ;
 
 void setup() {
@@ -24,12 +26,12 @@ void setup() {
   pinMode(acidPin, OUTPUT);
   pinMode(motorPin, OUTPUT);
   pinMode(echoPin, INPUT);
-  pinMode(HeaterPin, OUTPUT);
+  pinMode(heaterPin, OUTPUT);
   Serial.begin(9600);
 }
 
 void loop() {
-    
+
   // Below are the PH and pumping part
   int PH_N=analogRead(A0);
   int PH_P=analogRead(A1);
@@ -78,20 +80,24 @@ void loop() {
   delay(500);
 
   // Below are the heating part
-  long a = analogRead(analogPin);
-  float tempC = beta /(log((1025.0 * 10 / a - 10) / 10) + beta / 298.0) - 273.0;
+  float ThermistorIN = analogRead(ThermistorPin);
+  float R2 = R1 * (1023 / (1023-ThermistorIN) - 1);
+  float logR2 = log(R2);
+  float T = (1 / (A + B*logR2 + C*logR2*logR2*logR2));
+  float TempC = T - 273.15;
   Serial.print("TempC:  ");
-  Serial.print(tempC);
+  Serial.print(TempC);
   Serial.print("  C");
   Serial.println();
-  delay(200); 
-  if (tempC < target-0.25) {
-    analogWrite(HeaterPin, 150);
+  delay(1000); 
+  if (TempC < target-0.25) {
+    analogWrite(heaterPin, 150);
     Serial.print("Heater ON");
+    Serial.println();
     } 
-  else if (tempC > target + 0.25) {
-    analogWrite(HeaterPin, 0);
+  else if (TempC > target + 0.25) {
+    analogWrite(heaterPin, 0);
     Serial.print("Heater OFF");
+    Serial.println();
   }
-  
 }
