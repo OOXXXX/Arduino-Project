@@ -26,7 +26,7 @@ void loop()
     Serial.println(rpm);
   }
   
-  for (int a = 0; a <= 200; a++) 
+  for (int a = 0; a <= 100; a++) 
   {
     analogWrite(motorPin, a); 
   }
