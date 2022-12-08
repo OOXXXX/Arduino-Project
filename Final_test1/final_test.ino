@@ -1,8 +1,8 @@
 int PH_Max = 7.5;
 int PH_Min = 6.5;
-float F=96485.309;
-float R=8.314510;
-float C=2.30258509299;
+float F = 96485.309;
+float R = 8.314510;
+float C = 2.30258509299;
 const int basePin = 10; 
 const int acidPin = 11;
 const int motorPin = 6; 
@@ -32,6 +32,11 @@ void setup() {
 void loop() {
 
   // Below are the motor and speed sensor part
+  for (int a = 0; a <= 80; a++) 
+  {
+    analogWrite(motorPin, a); 
+  }
+
   time1 = pulseIn(echoPin, LOW);
   time2 = pulseIn(echoPin, HIGH);
   rps = 1000000/(2*(time1+time2));
@@ -39,17 +44,12 @@ void loop() {
 
   if (rpm == INFINITY)
   {
-    Serial.println("Sensor No signal");
+    Serial.println("Sensor no signal");
   }
   else
   {
-    Serial.println("RPM:");
+    Serial.println("RPM: ");
     Serial.println(rpm);
-  }
-  
-  for (int a = 0; a <= 80; a++) 
-  {
-    analogWrite(motorPin, a); 
   }
 
   // Below are the heating part
@@ -58,9 +58,9 @@ void loop() {
   float logR2 = log(R2);
   float T = (1 / (A + B*logR2 + C*logR2*logR2*logR2));
   float TempC = T - 273.15;
-  Serial.print("TempC:  ");
+  Serial.print("Temperature: ");
   Serial.print(TempC);
-  Serial.print("  C");
+  Serial.print(" °C");
   Serial.println();
   delay(1000); 
   if (TempC < target-0.25) 
@@ -75,7 +75,13 @@ void loop() {
     Serial.print("Heater OFF");
     Serial.println();
   }
-  
+  else
+  {
+    analogWrite(heaterPin, 0);
+    Serial.print("Heater OFF");
+    Serial.println();
+  }
+
   // Below are the PH and pumping part
   int PH_N=analogRead(A0);
   int PH_P=analogRead(A1);
