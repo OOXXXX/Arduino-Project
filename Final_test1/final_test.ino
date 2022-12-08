@@ -1,4 +1,3 @@
-int T=290;
 int PH_Max = 7.5;
 int PH_Min = 6.5;
 float F=96485.309;
@@ -32,38 +31,15 @@ void setup() {
 
 void loop() {
 
-  // Below are the PH and pumping part
-  int PH_N=analogRead(A0);
-  int PH_P=analogRead(A1);
-  float Voltage_N=PH_N*(5.0/1023.0);
-  float Voltage_P=PH_P*(5.0/1023.0);
-  float PH = 7.0+((F*(Voltage_P-Voltage_N))/(R*T*C));
-
-  if (PH > PH_Max)
-  {
-    analogWrite(basePin, 250);
-    analogWrite(acidPin, 0);
-  }
-  else if (PH < PH_Min)
-  {
-    analogWrite(acidPin, 250);
-    analogWrite(basePin, 0);
-  }
-  else
-  {
-    analogWrite(basePin, 0);
-    analogWrite(acidPin, 0);
-  }
-
   // Below are the motor and speed sensor part
   time1 = pulseIn(echoPin, LOW);
   time2 = pulseIn(echoPin, HIGH);
   rps = 1000000/(2*(time1+time2));
   rpm = rps*60;
 
-  if (rps == -1)
+  if (rps == inf || rps == -inf)
   {
-    Serial.println("Motor No signal");
+    Serial.println("Sensor No signal");
   }
   else
   {
@@ -100,4 +76,27 @@ void loop() {
     Serial.print("Heater OFF");
     Serial.println();
     }
+  
+  // Below are the PH and pumping part
+  int PH_N=analogRead(A0);
+  int PH_P=analogRead(A1);
+  float Voltage_N=PH_N*(5.0/1023.0);
+  float Voltage_P=PH_P*(5.0/1023.0);
+  float PH = 7.0+((F*(Voltage_P-Voltage_N))/(R*T*C));
+
+  if (PH > PH_Max)
+  {
+    analogWrite(basePin, 250);
+    analogWrite(acidPin, 0);
+  }
+  else if (PH < PH_Min)
+  {
+    analogWrite(acidPin, 250);
+    analogWrite(basePin, 0);
+  }
+  else
+  {
+    analogWrite(basePin, 0);
+    analogWrite(acidPin, 0);
+  }
 }
