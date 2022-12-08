@@ -37,7 +37,7 @@ void loop() {
   rps = 1000000/(2*(time1+time2));
   rpm = rps*60;
 
-  if (rps == inf || rps == -inf)
+  if (rpm == INFINITY)
   {
     Serial.println("Sensor No signal");
   }
@@ -51,9 +51,6 @@ void loop() {
   {
     analogWrite(motorPin, a); 
   }
-  Serial.println("PH:");
-  Serial.println(PH);
-  delay(500);
 
   // Below are the heating part
   float ThermistorIN = analogRead(ThermistorPin);
@@ -66,16 +63,18 @@ void loop() {
   Serial.print("  C");
   Serial.println();
   delay(1000); 
-  if (TempC < target-0.25) {
+  if (TempC < target-0.25) 
+  {
     analogWrite(heaterPin, 150);
     Serial.print("Heater ON");
     Serial.println();
-    } 
-  else if (TempC > target + 0.25) {
+  } 
+  else if (TempC > target + 0.25)
+  {
     analogWrite(heaterPin, 0);
     Serial.print("Heater OFF");
     Serial.println();
-    }
+  }
   
   // Below are the PH and pumping part
   int PH_N=analogRead(A0);
@@ -99,4 +98,7 @@ void loop() {
     analogWrite(basePin, 0);
     analogWrite(acidPin, 0);
   }
+  Serial.println("PH:");
+  Serial.println(PH);
+  delay(500);
 }
