@@ -19,6 +19,8 @@ const int heaterPin = 9;
 #define C 1.2034e-6
 #define R1 10000 //the value of the pull-down resistor
 float target = 30 ;
+int PH_N=analogRead(A0);
+int PH_P=analogRead(A1);
 
 void setup() {
   pinMode(basePin, OUTPUT);  
@@ -26,7 +28,7 @@ void setup() {
   pinMode(motorPin, OUTPUT);
   pinMode(echoPin, INPUT);
   pinMode(heaterPin, OUTPUT);
-  Serial.begin(9600);
+  Serial.begin(115200);
 }
 
 void loop() {
@@ -83,11 +85,11 @@ void loop() {
   }
 
   // Below are the PH and pumping part
-  int PH_N=analogRead(A0);
-  int PH_P=analogRead(A1);
+ 
   float Voltage_N=PH_N*(5.0/1023.0);
   float Voltage_P=PH_P*(5.0/1023.0);
   float PH = 7.0+((F*(Voltage_P-Voltage_N))/(R*T*C));
+  Serial.print(Voltage_P);
 
   if (PH > PH_Max)
   {
