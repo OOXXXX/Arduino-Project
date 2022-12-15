@@ -9,26 +9,27 @@ void setup()
 {
   pinMode(motorPin, OUTPUT);
   pinMode(echoPin, INPUT);
-  Serial.begin(9600);
+  Serial.begin(115200);
 }
 void loop()
 {
+  for (int a = 0; a <= 80; a++) 
+  {
+    analogWrite(motorPin, a); 
+  }
+
   time1 = pulseIn(echoPin, LOW);
   time2 = pulseIn(echoPin, HIGH);
   rps = 1000000/(2*(time1+time2));
   rpm = rps*60;
 
-  if (rps == -1)
+  if (rpm == INFINITY)
   {
-    Serial.println("No signal");
+    Serial.println("Sensor no signal");
   }
   else
   {
+    Serial.println("RPM: ");
     Serial.println(rpm);
-  }
-  
-  for (int a = 0; a <= 80; a++) 
-  {
-    analogWrite(motorPin, a); 
   }
 }
