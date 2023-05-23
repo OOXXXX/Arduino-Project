@@ -85,7 +85,6 @@ void loop() {
   }
 
   // Below are the PH and pumping part
- 
   float Voltage_N=PH_N*(5.0/1023.0);
   float Voltage_P=PH_P*(5.0/1023.0);
   float PH = 7.0+((F*(Voltage_P-Voltage_N))/(R*T*C));
