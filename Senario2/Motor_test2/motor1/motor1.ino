@@ -5,12 +5,13 @@
 int photoDiodePin = 2;
 int motorPin = 10;
 int motorPin2 = 11;
-int button1State = 0;
-int button2State = 0;
+int rightButtonState = 0;
+int leftButtonState = 0;
 int ledPin1 = 12;
 int ledPin2 = 13;
 int photodiodeReading = 0;
 int forwardPin = 9;
+int currentDirection = -1; // Current direction of the robot (-1 for left, 1 for right)
 
 void setup() {
     pinMode(motorPin, OUTPUT);
@@ -24,31 +25,43 @@ void setup() {
     pinMode(ledPin2, OUTPUT);
 
     Serial.begin(9600);
+    setMotorDirection(currentDirection);
 }
 
 void loop() {
     digitalWrite(ledPin1, HIGH);
     digitalWrite(ledPin2, HIGH);
     digitalWrite(photoDiodePin, HIGH);
-    button1State = digitalRead(BUTTON1_PIN);
-    button2State = digitalRead(BUTTON2_PIN);
-    analogWrite(forwardPin, 150);
-    if (button1State == HIGH) {
-    analogWrite(motorPin, 50);
-    analogWrite(motorPin2, 0);
-    Serial.println("Button 1 is pressed");
-    }
-    if (button2State == HIGH) {
-    analogWrite(motorPin, 0);
-    analogWrite(motorPin2, 50);
-    Serial.println("Button 2 is pressed");
-    }
+    rightButtonState = digitalRead(BUTTON1_PIN);
+    leftButtonState = digitalRead(BUTTON2_PIN);
+
+    if (rightButtonState == HIGH) {
+        digitalWrite(motorPin, HIGH);
+        digitalWrite(motorPin2, LOW);
+        digitalWrite(forwardPin, HIGH);
+    } else if (leftButtonState == HIGH) {
+        digitalWrite(motorPin, LOW);
+        digitalWrite(motorPin2, HIGH);
+        digitalWrite(forwardPin, LOW);
+    } else {
+        digitalWrite(motorPin, HIGH);
+        digitalWrite(motorPin2, LOW);
+    }   
+    
     photodiodeReading = analogRead(PHOTODIODE_PIN);
 
-    //print the photodiode reading
     Serial.print("Photodiode reading: ");
     Serial.println(photodiodeReading);
 
-    //wait a bit before reading again
     delay(100);
+}
+
+void setMotorDirection(int direction) {
+  if (direction == -1) {
+    digitalWrite(motorPin, HIGH);
+    digitalWrite(motorPin2, LOW);
+  } else {
+    digitalWrite(motorPin, LOW);
+    digitalWrite(motorPin2, HIGH);
+  }
 }
